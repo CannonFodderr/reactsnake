@@ -137,7 +137,7 @@ export class GameContextStore extends React.Component{
     reset = async () => {
         if(this.state.score > 0){
             const data = {name:this.state.playerName, score:this.state.score};
-            await axios.post('http://localhost:8080/leaderboards', data);
+            await axios.post('https://afternoon-earth-75642.herokuapp.com/leaderboards', data);
         }
         fetchLeaderboards().then((leaderBoards)=>{
             this.setState({leaderBoards});

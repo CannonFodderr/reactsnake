@@ -13,7 +13,7 @@ class Field extends React.Component{
                 placeholder={this.props.playerName} 
                 onChange={(e) => {this.context.setPlayerName(e.target.value)}}
                 maxLength="8"
-                autoFocus="true" 
+                autoFocus={true} 
                 />
             </div>
         )
