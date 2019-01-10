@@ -1,0 +1,43 @@
+import React from 'react';
+import GameContext from '../../contexts/GameContext';
+import './Player.css';
+import { keyboardController } from '../../controllers/playerController';
+
+class Player extends React.Component{
+    renderPlayerPosition = () => {
+        const gridBlock = this.context.gridArr[this.context.playerHeadPosition.id]
+        if(gridBlock && gridBlock.id){
+            return gridBlock;
+        } else {
+            return this.context.playerHeadPosition
+        }
+    }
+    componentDidMount(){
+        window.addEventListener('keydown', (e) => {
+            if(!this.context.showMenu){
+                const input = keyboardController(e, this.context.playerDirection, this.context.playerHeadPosition, this.context.gridRowNumItems )
+                if(input.id){
+                    this.context.setPlayerDirection({x: input.x, y: input.y})
+                }
+            }
+            
+        })
+    }
+    render(){
+        return(
+            <div 
+            className="nes-btn is-primary"
+            style={{
+                width: this.context.gridBlockSize,
+                height: this.context.gridBlockSize,
+                position: "absolute",
+                left: this.renderPlayerPosition().x,
+                top: this.renderPlayerPosition().y
+            }}
+            ></div>
+        )
+    }
+}
+
+Player.contextType = GameContext;
+export default Player;

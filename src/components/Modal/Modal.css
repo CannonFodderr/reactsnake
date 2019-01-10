@@ -1,0 +1,19 @@
+.modal{
+    display: block;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.hidden{
+    display: none;
+}
+
+.close{
+    width: fit-content;
+}
+
+.start-btn{
+    transition: 1s linear;
+}
