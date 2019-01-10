@@ -5,6 +5,9 @@ import { keyboardController } from '../../controllers/playerController';
 
 class Player extends React.Component{
     renderPlayerPosition = () => {
+        if(!this.context.playerHeadPosition){
+            return <div></div>
+        }
         const gridBlock = this.context.gridArr[this.context.playerHeadPosition.id]
         if(gridBlock && gridBlock.id){
             return gridBlock;

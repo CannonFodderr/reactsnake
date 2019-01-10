@@ -10,6 +10,9 @@ const fetchLeaderboards = async () => {
 }
 
 const gameOverConditions = ({playerHeadPosition, boardSize, gridBlockSize, playerDirection, tailArr}) => {
+    if(!playerHeadPosition){
+        return true;
+    }
     // Tail Conditions
     for(let i = 0; i < tailArr.length - 2; i++){
         if(tailArr[i] === playerHeadPosition.id){
@@ -20,7 +23,7 @@ const gameOverConditions = ({playerHeadPosition, boardSize, gridBlockSize, playe
     if(playerHeadPosition.x <= 0 && playerDirection.x === -1){
         return true;
     }
-    if(playerHeadPosition.x + gridBlockSize >= boardSize && playerDirection.x === 1){
+    if(playerHeadPosition.x + gridBlockSize + 1 >= boardSize && playerDirection.x === 1){
         return true;
     }
     if(playerHeadPosition.y <= 0 && playerDirection.y < 0){
@@ -43,7 +46,7 @@ const getRandomCoords = state => {
 
 const INITIAL_STATE = {
     isOnMobile: false,
-    isGameOver: false,
+    isGameOver: true,
     showMenu: true,
     score: 0,
     boardSize: 300,
@@ -103,6 +106,9 @@ export class GameContextStore extends React.Component{
         }
     }
     generateTailArr = () => {
+        if(!this.state.playerHeadPosition){
+            return;
+        }
         if(!this.state.tailArr.indexOf(this.state.playerHeadPosition.id)){
             const tailArr = [ ...this.state.tailArr, this.state.playerHeadPosition.id ];
             if(tailArr.length > this.state.score){
@@ -124,7 +130,7 @@ export class GameContextStore extends React.Component{
     }
     setPlayerName = playerName => {
         INITIAL_STATE.playerName = playerName;
-        this.setState({playerName});
+        this.setState({playerName, isGameOver: false});
     }
     testIsOnMobile = () => {
         // device detection
@@ -152,7 +158,6 @@ export class GameContextStore extends React.Component{
         await this.centerPlayerPosition();
     }
     componentDidMount(){
-        window.addEventListener('scroll', (e) => {e.preventDefault()})
         window.addEventListener('resize', () => { this.reset()})
         this.reset().then(() => {
             setInterval(() => {

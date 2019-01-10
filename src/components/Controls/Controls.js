@@ -11,7 +11,7 @@ class Controls extends React.Component{
             }
     }
     renderControls = () => {
-        if(!this.context.isOnMobile){
+        if(!this.context.isOnMobile || this.context.showMenu){
             return <div></div>
         }
         return(

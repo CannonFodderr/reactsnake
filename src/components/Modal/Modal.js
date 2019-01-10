@@ -12,6 +12,11 @@ class Modal extends React.Component{
         })
     }
     renderModal() {
+        if(!this.context.showMenu){
+            return(
+                <div></div>
+            )
+        }
         let className = "nes-container modal"
         if(!this.context.showMenu){
             className = "nes-container modal hidden";
