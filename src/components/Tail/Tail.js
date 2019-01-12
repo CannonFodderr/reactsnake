@@ -4,12 +4,13 @@ import './Tail.css';
 
 class Tail extends React.Component{
     renderTail = tailArr => {
-        return tailArr.map(tailBlock => {
+        return tailArr.map((tailBlock, index) => {
             if(tailBlock === tailBlock[tailArr.length]){
                 return <div></div>
             } else {
                 return <div 
                 className="nes-btn is-warning"
+                key={index}
                 style={{
                     height: this.context.gridBlockSize,
                     width: this.context.gridBlockSize,
