@@ -1,7 +1,7 @@
 import React from 'react';
 import GameContext from '../../contexts/GameContext';
 import './Tail.css';
-
+// 
 class Tail extends React.Component{
     renderTail = tailArr => {
         return tailArr.map((tailBlock, index) => {
