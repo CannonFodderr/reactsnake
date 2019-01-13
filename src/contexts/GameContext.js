@@ -59,7 +59,11 @@ const INITIAL_STATE = {
     pickupValue: 1,
     tailArr: [],
     playerName: "Player 1",
-    leaderBoards: []
+    leaderBoards: [],
+    fps: 15,
+    interval: null,
+    now: Date.now(),
+    then: null
 }
 
 export class GameContextStore extends React.Component{
@@ -140,6 +144,56 @@ export class GameContextStore extends React.Component{
                this.setState({isOnMobile: false});
            }
     }
+    startAnimation = () => {
+        this.setState({interval: 1000 / this.state.fps, then: Date.now()})
+        this.step();
+    }
+    step = () => {
+        if(this.state.showModal){
+            return;
+        }
+        window.requestAnimationFrame(this.step);
+        this.setState({now: Date.now()})
+        let elpased = this.state.now - this.state.then;
+        if(elpased > this.state.interval){
+            this.setState({then: this.state.now})
+        
+        this.generateTailArr();
+        if(gameOverConditions(this.state)){
+            console.log("Game Over")
+            return this.reset();
+        }
+        if(scoreConditions(this.state)){
+            const score = this.state.score + this.state.pickupValue;
+            this.setPickupPosition()
+            this.setState({score});
+        }
+        if(this.state.playerDirection.y === -1){
+            const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id - this.state.gridRowNumItems]
+            this.setState({playerHeadPosition});
+            this.generateTailArr();
+        }
+        if(this.state.playerDirection.y === 1){
+            const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id + this.state.gridRowNumItems]
+            this.setState({playerHeadPosition});
+            this.generateTailArr();
+        }
+        if(this.state.playerDirection.x === -1){
+            const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id - 1]
+            this.setState({playerHeadPosition});
+            this.generateTailArr();
+        }
+        if(this.state.playerDirection.x === 1){
+            const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id + 1]
+            this.setState({playerHeadPosition});
+            this.generateTailArr();
+        }
+    }
+        // setTimeout(() =>{
+        //     window.requestAnimationFrame(this.step);
+        // }, 80)
+        
+    }
     reset = async () => {
         if(this.state.score > 0){
             const data = {name:this.state.playerName, score:this.state.score};
@@ -156,46 +210,11 @@ export class GameContextStore extends React.Component{
         await this.generateGrid();
         await this.setPickupPosition();
         await this.centerPlayerPosition();
+        this.startAnimation();
     }
     componentDidMount(){
         window.addEventListener('resize', () => { this.reset()})
-        this.reset().then(() => {
-            setInterval(() => {
-                if(this.state.showModal){
-                    return;
-                }
-                this.generateTailArr();
-                if(gameOverConditions(this.state)){
-                    console.log("Game Over")
-                    return this.reset();
-                }
-                if(scoreConditions(this.state)){
-                    const score = this.state.score + this.state.pickupValue;
-                    this.setPickupPosition()
-                    this.setState({score});
-                }
-                if(this.state.playerDirection.y === -1){
-                    const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id - this.state.gridRowNumItems]
-                    this.setState({playerHeadPosition});
-                    this.generateTailArr();
-                }
-                if(this.state.playerDirection.y === 1){
-                    const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id + this.state.gridRowNumItems]
-                    this.setState({playerHeadPosition});
-                    this.generateTailArr();
-                }
-                if(this.state.playerDirection.x === -1){
-                    const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id - 1]
-                    this.setState({playerHeadPosition});
-                    this.generateTailArr();
-                }
-                if(this.state.playerDirection.x === 1){
-                    const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id + 1]
-                    this.setState({playerHeadPosition});
-                    this.generateTailArr();
-                }
-            }, 100)
-        });
+        this.reset();
     }
     render(){
         return(
