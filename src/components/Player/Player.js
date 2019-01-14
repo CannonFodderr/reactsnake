@@ -10,6 +10,8 @@ class Player extends React.Component{
             if(input.id){
                 this.context.setPlayerDirection({x: input.x, y: input.y});
             }
+        } else {
+            this.context.setPlayerDirection({x: 0, y: 0});
         }
     }
     renderPlayerPosition = () => {

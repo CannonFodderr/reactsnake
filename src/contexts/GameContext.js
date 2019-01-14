@@ -148,7 +148,13 @@ export class GameContextStore extends React.Component{
         this.setState({interval: 1000 / this.state.fps, then: Date.now()})
         this.step();
     }
+    stopAnimation = () => {
+        window.cancelAnimationFrame(this.step);
+    }
     step = async () => {
+        if(gameOverConditions(this.state)){
+            return this.reset();
+        }
         window.requestAnimationFrame(this.step);
         if(this.state.showMenu){
             return;
@@ -158,9 +164,7 @@ export class GameContextStore extends React.Component{
         if(elpased > this.state.interval){
             this.setState({then: this.state.now})
             
-            if(gameOverConditions(this.state)){
-                return this.reset();
-            }
+            
             if(scoreConditions(this.state)){
                 const score = this.state.score + this.state.pickupValue;
                 this.setPickupPosition()
@@ -189,7 +193,7 @@ export class GameContextStore extends React.Component{
         }
     }
     reset = async () => {
-        window.cancelAnimationFrame(this.step)
+        this.stopAnimation();
         if(this.state.score > 0){
             const data = {name:this.state.playerName, score:this.state.score};
             await axios.post('https://afternoon-earth-75642.herokuapp.com/leaderboards', data);

@@ -10,11 +10,6 @@ import ScoreBoard from '../ScoreBoard/ScoreBoard';
 
 class GameBoard extends React.Component{
     render(){
-        if(this.context.showMenu){
-            return(
-                <div></div>
-            )
-        }
         return(
             <div 
             ref={(divElement) => this.divElement = divElement}

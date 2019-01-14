@@ -1,5 +1,4 @@
 export const keyboardController = (event, prevDirection,playerHeadPosition, gridRowNumItems) => {
-    console.log(prevDirection);
     switch(event.which){
         case 87:
             if(prevDirection.y !== 0){
