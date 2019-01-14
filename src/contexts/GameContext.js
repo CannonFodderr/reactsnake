@@ -60,7 +60,7 @@ const INITIAL_STATE = {
     tailArr: [],
     playerName: "Player 1",
     leaderBoards: [],
-    fps: 15,
+    fps: 10,
     interval: null,
     now: Date.now(),
     then: null
@@ -152,9 +152,7 @@ export class GameContextStore extends React.Component{
         window.cancelAnimationFrame(this.step);
     }
     step = async () => {
-        if(gameOverConditions(this.state)){
-            return this.reset();
-        }
+        
         window.requestAnimationFrame(this.step);
         if(this.state.showMenu){
             return;
@@ -163,7 +161,9 @@ export class GameContextStore extends React.Component{
         let elpased = this.state.now - this.state.then;
         if(elpased > this.state.interval){
             this.setState({then: this.state.now})
-            
+            if(gameOverConditions(this.state)){
+                return this.reset();
+            }
             
             if(scoreConditions(this.state)){
                 const score = this.state.score + this.state.pickupValue;
