@@ -140,9 +140,9 @@ export class GameContextStore extends React.Component{
         // device detection
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
             this.setState({isOnMobile: true});
-           } else {
-               this.setState({isOnMobile: false});
-           }
+        } else {
+            this.setState({isOnMobile: false});
+        }
     }
     startAnimation = () => {
         this.setState({interval: 1000 / this.state.fps, then: Date.now()})
@@ -153,46 +153,41 @@ export class GameContextStore extends React.Component{
             return;
         }
         window.requestAnimationFrame(this.step);
-        this.setState({now: Date.now()})
+        this.setState({now: Date.now()});
         let elpased = this.state.now - this.state.then;
         if(elpased > this.state.interval){
             this.setState({then: this.state.now})
-        
-        this.generateTailArr();
-        if(gameOverConditions(this.state)){
-            console.log("Game Over")
-            return this.reset();
-        }
-        if(scoreConditions(this.state)){
-            const score = this.state.score + this.state.pickupValue;
-            this.setPickupPosition()
-            this.setState({score});
-        }
-        if(this.state.playerDirection.y === -1){
-            const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id - this.state.gridRowNumItems]
-            this.setState({playerHeadPosition});
+            
             this.generateTailArr();
+            if(gameOverConditions(this.state)){
+                return this.reset();
+            }
+            if(scoreConditions(this.state)){
+                const score = this.state.score + this.state.pickupValue;
+                this.setPickupPosition()
+                this.setState({score});
+            }
+            if(this.state.playerDirection.y === -1){
+                const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id - this.state.gridRowNumItems]
+                this.setState({playerHeadPosition});
+                this.generateTailArr();
+            }
+            if(this.state.playerDirection.y === 1){
+                const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id + this.state.gridRowNumItems]
+                this.setState({playerHeadPosition});
+                this.generateTailArr();
+            }
+            if(this.state.playerDirection.x === -1){
+                const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id - 1]
+                this.setState({playerHeadPosition});
+                this.generateTailArr();
+            }
+            if(this.state.playerDirection.x === 1){
+                const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id + 1]
+                this.setState({playerHeadPosition});
+                this.generateTailArr();
+            }
         }
-        if(this.state.playerDirection.y === 1){
-            const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id + this.state.gridRowNumItems]
-            this.setState({playerHeadPosition});
-            this.generateTailArr();
-        }
-        if(this.state.playerDirection.x === -1){
-            const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id - 1]
-            this.setState({playerHeadPosition});
-            this.generateTailArr();
-        }
-        if(this.state.playerDirection.x === 1){
-            const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id + 1]
-            this.setState({playerHeadPosition});
-            this.generateTailArr();
-        }
-    }
-        // setTimeout(() =>{
-        //     window.requestAnimationFrame(this.step);
-        // }, 80)
-        
     }
     reset = async () => {
         if(this.state.score > 0){
@@ -202,7 +197,7 @@ export class GameContextStore extends React.Component{
         fetchLeaderboards().then((leaderBoards)=>{
             this.setState({leaderBoards});
         });
-        this.setState(INITIAL_STATE);
+        await this.setState(INITIAL_STATE);
         await this.testIsOnMobile();
         await this.setBoardSize();
         const gridBlockSize = await this.state.boardSize / 20;
@@ -225,12 +220,13 @@ export class GameContextStore extends React.Component{
                 setPlayerDirection: this.setPlayerDirection,
                 setShowMenu: this.setShowMenu,
                 setPlayerName: this.setPlayerName
-                }}>
-                {this.props.children}
+            }}>
+            {this.props.children}
             </Context.Provider>
-        )
+            )
+        }
     }
-}
-
-export default Context;
-
+    
+    export default Context;
+    
+    

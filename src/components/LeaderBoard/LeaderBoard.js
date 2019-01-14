@@ -3,12 +3,16 @@ import GameContext from '../../contexts/GameContext';
 
 class LeaderBoard extends React.Component{
     renderLeaderBoards(){
-        return this.context.leaderBoards.map((item, index) => {
-            if(index === 0){
-                return <tr key={item._id} style={{textAlign:"center", background: "#3e3e"}}><td>{item.name}</td><td> {item.score}</td></tr>
-            }
-            return <tr key={item._id} style={{textAlign:"center"}}><td>{item.name}</td><td> {item.score}</td></tr>
-        })
+        if(this.context.leaderBoards.length === 0){
+            return <tr style={{textAlign:"center", background: "#3e3e"}}><td>Loading...</td></tr>
+        } else {
+            return this.context.leaderBoards.map((item, index) => {
+                if(index === 0){
+                    return <tr key={item._id} style={{textAlign:"center", background: "#3e3e"}}><td>{item.name}</td><td> {item.score}</td></tr>
+                }
+                return <tr key={item._id} style={{textAlign:"center"}}><td>{item.name}</td><td> {item.score}</td></tr>
+            });
+        }
     }
     render(){
         return(
