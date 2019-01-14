@@ -4,23 +4,27 @@ export const keyboardController = (event, prevDirection,playerHeadPosition, grid
         case 87:
             if(prevDirection.y !== 0){
                 return prevDirection
+            } else {
+                return { x: 0, y: -1, id: playerHeadPosition.id - gridRowNumItems - 1 }
             }
-            return { x: 0, y: -1, id: playerHeadPosition.id - gridRowNumItems - 1 }
         case 83:
             if(prevDirection.y !== 0){
                 return prevDirection
+            } else {
+                return { x: 0, y: 1, id: playerHeadPosition.id + gridRowNumItems + 1}
             }
-            return { x: 0, y: 1, id: playerHeadPosition.id + gridRowNumItems + 1}
         case 65:
             if(prevDirection.x !== 0){
                 return prevDirection
+            } else {
+                return { x: -1, y: 0, id: playerHeadPosition.id - 1 }
             }
-            return { x: -1, y: 0, id: playerHeadPosition.id - 1 }
         case 68:
             if(prevDirection.x !== 0){
                 return prevDirection
+            } else {
+                return { x: 1, y: 0, id: playerHeadPosition.id + 1 }
             }
-            return { x: 1, y: 0, id: playerHeadPosition.id + 1 }
         default: return prevDirection;
     }
 }

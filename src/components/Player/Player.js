@@ -4,6 +4,15 @@ import './Player.css';
 import { keyboardController } from '../../controllers/playerController';
 
 class Player extends React.Component{
+    handleInput = (e) => {
+        if(!this.context.showMenu){
+            console.log(this.context.playerDirection);
+            const input = keyboardController(e, this.context.playerDirection, this.context.playerHeadPosition, this.context.gridRowNumItems )
+            if(input.id){
+                this.context.setPlayerDirection({x: input.x, y: input.y});
+            }
+        }
+    }
     renderPlayerPosition = () => {
         if(!this.context.playerHeadPosition){
             return <div></div>
@@ -16,15 +25,7 @@ class Player extends React.Component{
         }
     }
     componentDidMount(){
-        window.addEventListener('keydown', (e) => {
-            if(!this.context.showMenu){
-                const input = keyboardController(e, this.context.playerDirection, this.context.playerHeadPosition, this.context.gridRowNumItems )
-                if(input.id){
-                    this.context.setPlayerDirection({x: input.x, y: input.y})
-                }
-            }
-            
-        })
+        window.addEventListener('keydown', (e) => { this.handleInput(e)})
     }
     render(){
         return(

@@ -148,17 +148,16 @@ export class GameContextStore extends React.Component{
         this.setState({interval: 1000 / this.state.fps, then: Date.now()})
         this.step();
     }
-    step = () => {
-        if(this.state.showModal){
+    step = async () => {
+        window.requestAnimationFrame(this.step);
+        if(this.state.showMenu){
             return;
         }
-        window.requestAnimationFrame(this.step);
         this.setState({now: Date.now()});
         let elpased = this.state.now - this.state.then;
         if(elpased > this.state.interval){
             this.setState({then: this.state.now})
             
-            this.generateTailArr();
             if(gameOverConditions(this.state)){
                 return this.reset();
             }
@@ -179,7 +178,7 @@ export class GameContextStore extends React.Component{
             }
             if(this.state.playerDirection.x === -1){
                 const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id - 1]
-                this.setState({playerHeadPosition});
+                await this.setState({playerHeadPosition});
                 this.generateTailArr();
             }
             if(this.state.playerDirection.x === 1){
@@ -190,6 +189,7 @@ export class GameContextStore extends React.Component{
         }
     }
     reset = async () => {
+        window.cancelAnimationFrame(this.step)
         if(this.state.score > 0){
             const data = {name:this.state.playerName, score:this.state.score};
             await axios.post('https://afternoon-earth-75642.herokuapp.com/leaderboards', data);
@@ -198,6 +198,7 @@ export class GameContextStore extends React.Component{
             this.setState({leaderBoards});
         });
         await this.setState(INITIAL_STATE);
+        console.log(this.state)
         await this.testIsOnMobile();
         await this.setBoardSize();
         const gridBlockSize = await this.state.boardSize / 20;
