@@ -198,13 +198,13 @@ export class GameContextStore extends React.Component{
             this.setState({leaderBoards});
         });
         await this.setState(INITIAL_STATE);
-        console.log(this.state)
         await this.testIsOnMobile();
         await this.setBoardSize();
         const gridBlockSize = await this.state.boardSize / 20;
         await this.setState({gridBlockSize});
         await this.generateGrid();
         await this.setPickupPosition();
+        await this.setState({playerDirection: {x:0, y:0}});
         await this.centerPlayerPosition();
         this.startAnimation();
     }
