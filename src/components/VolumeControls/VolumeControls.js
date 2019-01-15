@@ -12,7 +12,7 @@ class VolumeControls extends React.Component{
     }
     renderControls = () => {
         if(this.context.isMuted){
-            return <div>{this.renderCheckBox() }</div>
+            return <div>{ this.renderCheckBox() }</div>
         }
         return (
         <div>
@@ -27,7 +27,8 @@ class VolumeControls extends React.Component{
     }
     render(){
         return (
-            <div>
+            <div className="nes-container">
+                <h4 className="title">Audio Setup</h4>
                 {this.renderControls()}
             </div>
         )

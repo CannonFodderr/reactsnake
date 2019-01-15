@@ -220,7 +220,6 @@ export class GameContextStore extends React.Component{
             INITIAL_STATE.volume = volume;
             setSynthVolume(volume);
             this.setState({volume});
-            console.log(config.volume);
         }
     }
     reset = async () => {
