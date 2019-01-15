@@ -25,11 +25,13 @@ class Modal extends React.Component{
             <React.Fragment>
             <div className={className} style={{width: "100vw", minHeight: "100vh"}}>
             <h1 style={{textAlign:"center"}}>SNAAAAAKE</h1>
+            <h4 style={{textAlign:"center"}}><a href="https://github.com/CannonFodderr/reactsnake">Fork me on GitHub</a></h4>
             <button style={{width: "100%"}} className="nes-btn is-error" onClick={() => {this.context.setShowMenu()}}>
-                {/* <i className="nes-icon close is-small"  /> */}
                 <span className="start-btn">START</span>
             </button>
                 {this.props.children}
+                <hr/>
+                <h4>By<a href="https://www.linkedin.com/in/idan-izhaki/"> Idan Izhaki</a></h4>
             </div>
             </React.Fragment>
         )
@@ -39,7 +41,6 @@ class Modal extends React.Component{
             <div>
                 {this.renderModal()}
             </div>
-            
         )
     }
 }
