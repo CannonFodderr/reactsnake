@@ -4,7 +4,9 @@ import axios from 'axios';
 import { trigger } from '../audio/tone';
 const Context = createContext();
 
-
+const config = {
+    isMuted: false
+}
 
 const fetchLeaderboards = async () => {
     const response = await leaderboards.get('/leaderboards');
@@ -66,7 +68,8 @@ const INITIAL_STATE = {
     fps: 10,
     interval: null,
     now: Date.now(),
-    then: null
+    then: null,
+    isMuted: config.isMuted
 }
 
 export class GameContextStore extends React.Component{
@@ -165,13 +168,17 @@ export class GameContextStore extends React.Component{
         if(elpased > this.state.interval){
             this.setState({then: this.state.now})
             if(gameOverConditions(this.state)){
-                trigger("D3");
+                if(!this.state.isMuted){
+                    trigger("D3");
+                }
                 return this.reset();
             }
             
             if(scoreConditions(this.state)){
                 const score = this.state.score + this.state.pickupValue;
-                trigger("D4");
+                if(!this.state.isMuted){
+                    trigger("D4");
+                }
                 this.setPickupPosition()
                 this.setState({score});
             }
@@ -197,6 +204,15 @@ export class GameContextStore extends React.Component{
             }
         }
     }
+    muteAudio = () => {
+        if(this.state.isMuted){
+            config.isMuted = false;
+            this.setState({ isMuted: false });
+        } else {
+            config.isMuted = true;
+            this.setState({ isMuted: true });
+        }
+    }
     reset = async () => {
         this.stopAnimation();
         if(this.state.score > 0){
@@ -204,6 +220,7 @@ export class GameContextStore extends React.Component{
             await axios.post('https://afternoon-earth-75642.herokuapp.com/leaderboards', data);
         }
         await this.setState(INITIAL_STATE);
+        await this.setState({isMuted: config.isMuted});
         fetchLeaderboards().then((leaderBoards)=>{
             this.setState({leaderBoards});
         });
@@ -229,7 +246,8 @@ export class GameContextStore extends React.Component{
                 setBorders: this.setBorders,
                 setPlayerDirection: this.setPlayerDirection,
                 setShowMenu: this.setShowMenu,
-                setPlayerName: this.setPlayerName
+                setPlayerName: this.setPlayerName,
+                muteAudio: this.muteAudio
             }}>
             {this.props.children}
             </Context.Provider>
