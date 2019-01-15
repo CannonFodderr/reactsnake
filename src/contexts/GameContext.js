@@ -6,7 +6,7 @@ const Context = createContext();
 
 const config = {
     isMuted: false,
-    volume: setSynthVolume(-10)
+    volume: -10
 }
 
 const fetchLeaderboards = async () => {
@@ -160,7 +160,6 @@ export class GameContextStore extends React.Component{
         window.cancelAnimationFrame(this.step);
     }
     step = async () => {
-        
         window.requestAnimationFrame(this.step);
         if(this.state.showMenu){
             return;
@@ -218,8 +217,10 @@ export class GameContextStore extends React.Component{
     adjustAudioVolume = value => {
         const volume = this.state.volume + value
         if(volume >= -60 && volume <= 40){
+            INITIAL_STATE.volume = volume;
             setSynthVolume(volume);
-            this.setState({volume})
+            this.setState({volume});
+            console.log(config.volume);
         }
     }
     reset = async () => {

@@ -18,9 +18,9 @@ class VolumeControls extends React.Component{
         <div>
             { this.renderCheckBox () }
             <div>
-            <button className="nes-btn" onClick={() => {this.context.adjustAudioVolume(-5)}}>-</button>
-            <button className="nes-btn" onClick={() => {this.context.adjustAudioVolume(5)}}>+</button>
-            <progress className="nes-progress is-primary" value={this.context.volume + 60} max="100"></progress>
+                <button className="nes-btn" onClick={() => {this.context.adjustAudioVolume(-5)}}>-</button>
+                <button className="nes-btn" onClick={() => {this.context.adjustAudioVolume(5)}}>+</button>
+                <progress className="nes-progress is-primary" value={this.context.volume + 60} max="100"></progress>
             </div>
         </div>
         )
