@@ -1,11 +1,12 @@
 import React, {createContext} from 'react';
 import leaderboards from '../api/leaderboards';
 import axios from 'axios';
-import { trigger } from '../audio/tone';
+import { trigger, setSynthVolume } from '../audio/tone';
 const Context = createContext();
 
 const config = {
-    isMuted: false
+    isMuted: false,
+    volume: setSynthVolume(-10)
 }
 
 const fetchLeaderboards = async () => {
@@ -69,7 +70,8 @@ const INITIAL_STATE = {
     interval: null,
     now: Date.now(),
     then: null,
-    isMuted: config.isMuted
+    isMuted: config.isMuted,
+    volume: config.volume
 }
 
 export class GameContextStore extends React.Component{
@@ -213,6 +215,13 @@ export class GameContextStore extends React.Component{
             this.setState({ isMuted: true });
         }
     }
+    adjustAudioVolume = value => {
+        const volume = this.state.volume + value
+        if(volume >= -60 && volume <= 40){
+            setSynthVolume(volume);
+            this.setState({volume})
+        }
+    }
     reset = async () => {
         this.stopAnimation();
         if(this.state.score > 0){
@@ -247,7 +256,8 @@ export class GameContextStore extends React.Component{
                 setPlayerDirection: this.setPlayerDirection,
                 setShowMenu: this.setShowMenu,
                 setPlayerName: this.setPlayerName,
-                muteAudio: this.muteAudio
+                muteAudio: this.muteAudio,
+                adjustAudioVolume: this.adjustAudioVolume
             }}>
             {this.props.children}
             </Context.Provider>

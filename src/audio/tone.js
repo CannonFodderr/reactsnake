@@ -15,7 +15,11 @@ var synth = new Tone.Synth({
     },
 }).toMaster()
 
-synth.volume.value = -10;
+synth.volume.value = 0;
+
+export const setSynthVolume = value => {
+    return synth.volume.value = value * 0.5;
+}
 
 export const trigger = (note) => {
     synth.triggerAttackRelease(note, 0.1);
