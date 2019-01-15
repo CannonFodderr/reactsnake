@@ -1,8 +1,10 @@
 import React, {createContext} from 'react';
 import leaderboards from '../api/leaderboards';
 import axios from 'axios';
-
+import { trigger } from '../audio/tone';
 const Context = createContext();
+
+
 
 const fetchLeaderboards = async () => {
     const response = await leaderboards.get('/leaderboards');
@@ -13,12 +15,7 @@ const gameOverConditions = ({playerHeadPosition, boardSize, gridBlockSize, playe
     if(!playerHeadPosition){
         return true;
     }
-    // Tail Conditions
-    for(let i = 0; i < tailArr.length - 2; i++){
-        if(tailArr[i] === playerHeadPosition.id){
-            return true;
-        }
-    }
+    
     // Bounds Conditions
     if(playerHeadPosition.x <= 0 && playerDirection.x === -1){
         return true;
@@ -31,6 +28,12 @@ const gameOverConditions = ({playerHeadPosition, boardSize, gridBlockSize, playe
     }
     if(playerHeadPosition.y + gridBlockSize  >= boardSize && playerDirection.y > 0){
         return true;
+    }
+    // Tail Conditions
+    for(let i = 0; i < tailArr.length - 2; i++){
+        if(tailArr[i] === playerHeadPosition.id){
+            return true;
+        }
     }
 }
 const scoreConditions = state => {
@@ -162,11 +165,13 @@ export class GameContextStore extends React.Component{
         if(elpased > this.state.interval){
             this.setState({then: this.state.now})
             if(gameOverConditions(this.state)){
+                trigger("D3");
                 return this.reset();
             }
             
             if(scoreConditions(this.state)){
                 const score = this.state.score + this.state.pickupValue;
+                trigger("D4");
                 this.setPickupPosition()
                 this.setState({score});
             }
@@ -198,10 +203,10 @@ export class GameContextStore extends React.Component{
             const data = {name:this.state.playerName, score:this.state.score};
             await axios.post('https://afternoon-earth-75642.herokuapp.com/leaderboards', data);
         }
+        await this.setState(INITIAL_STATE);
         fetchLeaderboards().then((leaderBoards)=>{
             this.setState({leaderBoards});
         });
-        await this.setState(INITIAL_STATE);
         await this.testIsOnMobile();
         await this.setBoardSize();
         const gridBlockSize = await this.state.boardSize / 20;
@@ -213,7 +218,7 @@ export class GameContextStore extends React.Component{
         this.startAnimation();
     }
     componentDidMount(){
-        window.addEventListener('resize', () => { this.reset()})
+        window.addEventListener('resize', () => { this.reset()});
         this.reset();
     }
     render(){
