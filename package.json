@@ -24,5 +24,18 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "description": "Using React as a game engine by handling data inside the context system.",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CannonFodderr/reactsnake.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CannonFodderr/reactsnake/issues"
+  },
+  "homepage": "https://github.com/CannonFodderr/reactsnake#readme"
 }
