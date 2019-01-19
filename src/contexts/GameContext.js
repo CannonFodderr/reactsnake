@@ -76,11 +76,11 @@ const INITIAL_STATE = {
 
 export class GameContextStore extends React.Component{
     state = INITIAL_STATE;
-    setBorders = async gameBoardBorders => {
-        await this.setState({gameBoardBorders});
+    setBorders = gameBoardBorders => {
+        this.setState({gameBoardBorders});
         this.generateGrid();
     }
-    generateGrid = async () => {
+    generateGrid = () => {
         const gridRowNumItems = Math.round(this.state.boardSize / this.state.gridBlockSize);
         const gridArr = [];
         for(let i = 0; i <= gridRowNumItems -1; i++){
@@ -159,7 +159,7 @@ export class GameContextStore extends React.Component{
     stopAnimation = () => {
         window.cancelAnimationFrame(this.step);
     }
-    step = async () => {
+    step = () => {
         window.requestAnimationFrame(this.step);
         if(this.state.showMenu){
             return;
@@ -195,7 +195,7 @@ export class GameContextStore extends React.Component{
             }
             if(this.state.playerDirection.x === -1){
                 const playerHeadPosition = this.state.gridArr[this.state.playerHeadPosition.id - 1]
-                await this.setState({playerHeadPosition});
+                this.setState({playerHeadPosition});
                 this.generateTailArr();
             }
             if(this.state.playerDirection.x === 1){
@@ -222,26 +222,27 @@ export class GameContextStore extends React.Component{
             this.setState({volume});
         }
     }
-    reset = async () => {
+    reset = () => {
         this.stopAnimation();
         if(this.state.score > 0){
             const data = {name:this.state.playerName, score:this.state.score};
-            await axios.post('https://afternoon-earth-75642.herokuapp.com/leaderboards', data);
+            axios.post('https://afternoon-earth-75642.herokuapp.com/leaderboards', data);
         }
-        await this.setState(INITIAL_STATE);
-        await this.setState({isMuted: config.isMuted});
+        this.setState(INITIAL_STATE);
+        this.setState({isMuted: config.isMuted});
         fetchLeaderboards().then((leaderBoards)=>{
             this.setState({leaderBoards});
-        });
-        await this.testIsOnMobile();
-        await this.setBoardSize();
-        const gridBlockSize = await this.state.boardSize / 20;
-        await this.setState({gridBlockSize});
-        await this.generateGrid();
-        await this.setPickupPosition();
-        await this.setState({playerDirection: {x:0, y:0}});
-        await this.centerPlayerPosition();
-        this.startAnimation();
+        }).then(()=>{
+            this.testIsOnMobile();
+            this.setBoardSize();
+            const gridBlockSize = this.state.boardSize / 20;
+            this.setState({gridBlockSize});
+            this.generateGrid();
+            this.setPickupPosition();
+            this.setState({playerDirection: {x:0, y:0}});
+            this.centerPlayerPosition();
+            this.startAnimation();
+        })
     }
     componentDidMount(){
         window.addEventListener('resize', () => { this.reset()});
