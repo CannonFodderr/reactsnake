@@ -12,10 +12,10 @@ class Controls extends React.Component{
     }
     renderControls = () => {
         if(!this.context.isOnMobile || this.context.showMenu){
-            return <div></div>
+            return <div style={{display: "none"}}></div>
         }
         return(
-            <table className="nes-table is-bordered is-centered is-dark controls-table" style={{width: this.context.boardSize}}>
+            <table className="nes-table is-bordered is-centered is-dark controls-table" style={{width: this.context.boardSize, display: "table"}}>
                 <tbody>
                     <tr>
                         <td></td>
