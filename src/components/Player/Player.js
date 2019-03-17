@@ -29,6 +29,7 @@ class Player extends React.Component{
         window.addEventListener('keydown', (e) => { this.handleInput(e) })
     }
     render(){
+        let pos = this.renderPlayerPosition();
         return(
             <div 
             className="nes-btn is-primary"
@@ -36,8 +37,9 @@ class Player extends React.Component{
                 width: this.context.gridBlockSize,
                 height: this.context.gridBlockSize,
                 position: "absolute",
-                left: this.renderPlayerPosition().x,
-                top: this.renderPlayerPosition().y
+                transform: `translate(${pos.x}px, ${pos.y}px)`,
+                left: "0px",
+                top: "0px"
             }}
             ></div>
         )
