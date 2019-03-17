@@ -1,13 +1,13 @@
 {
-  "main.css": "/static/css/main.40325a04.chunk.css",
-  "main.js": "/static/js/main.8f7cc97c.chunk.js",
-  "main.js.map": "/static/js/main.8f7cc97c.chunk.js.map",
-  "static/js/1.f38617a2.chunk.js": "/static/js/1.f38617a2.chunk.js",
-  "static/js/1.f38617a2.chunk.js.map": "/static/js/1.f38617a2.chunk.js.map",
-  "runtime~main.js": "/static/js/runtime~main.229c360f.js",
-  "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
-  "static/css/main.40325a04.chunk.css.map": "/static/css/main.40325a04.chunk.css.map",
-  "index.html": "/index.html",
-  "precache-manifest.c727c24b343c61e9dbf3bcd61edb5bae.js": "/precache-manifest.c727c24b343c61e9dbf3bcd61edb5bae.js",
-  "service-worker.js": "/service-worker.js"
+  "main.css": "/CannonFodderr/reactsnake/static/css/main.40325a04.chunk.css",
+  "main.js": "/CannonFodderr/reactsnake/static/js/main.a4bdeb28.chunk.js",
+  "main.js.map": "/CannonFodderr/reactsnake/static/js/main.a4bdeb28.chunk.js.map",
+  "static/js/1.f38617a2.chunk.js": "/CannonFodderr/reactsnake/static/js/1.f38617a2.chunk.js",
+  "static/js/1.f38617a2.chunk.js.map": "/CannonFodderr/reactsnake/static/js/1.f38617a2.chunk.js.map",
+  "runtime~main.js": "/CannonFodderr/reactsnake/static/js/runtime~main.a5845e00.js",
+  "runtime~main.js.map": "/CannonFodderr/reactsnake/static/js/runtime~main.a5845e00.js.map",
+  "static/css/main.40325a04.chunk.css.map": "/CannonFodderr/reactsnake/static/css/main.40325a04.chunk.css.map",
+  "index.html": "/CannonFodderr/reactsnake/index.html",
+  "precache-manifest.ef0e8ea42dbd723529bc6a22af1f2432.js": "/CannonFodderr/reactsnake/precache-manifest.ef0e8ea42dbd723529bc6a22af1f2432.js",
+  "service-worker.js": "/CannonFodderr/reactsnake/service-worker.js"
 }

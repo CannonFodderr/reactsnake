@@ -15,8 +15,9 @@ class Tail extends React.Component{
                     height: this.context.gridBlockSize,
                     width: this.context.gridBlockSize,
                     position: "absolute",
-                    top: this.context.gridArr[tailBlock].y,
-                    left: this.context.gridArr[tailBlock].x
+                    transform: `translate(${this.context.gridArr[tailBlock].x}px, ${this.context.gridArr[tailBlock].y}px)`,
+                    top: "0px",
+                    left: "0px"
                 }}
                 ></div>
             }

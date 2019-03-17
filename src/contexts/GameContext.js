@@ -66,7 +66,7 @@ const INITIAL_STATE = {
     tailArr: [],
     playerName: "Player 1",
     leaderBoards: [],
-    fps: 10,
+    fps: 30,
     interval: null,
     now: Date.now(),
     then: null,

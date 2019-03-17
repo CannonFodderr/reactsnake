@@ -36,8 +36,9 @@ class Player extends React.Component{
                 width: this.context.gridBlockSize,
                 height: this.context.gridBlockSize,
                 position: "absolute",
-                left: this.renderPlayerPosition().x,
-                top: this.renderPlayerPosition().y
+                top: "0px",
+                left: "0px",
+                transform: `translate(${this.renderPlayerPosition().x}px, ${this.renderPlayerPosition().y}px)`
             }}
             ></div>
         )
