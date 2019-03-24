@@ -23,7 +23,7 @@ class Modal extends React.Component{
         }
         return (
             <React.Fragment>
-            <div className={className} style={{width: "100vw", minHeight: "100vh"}}>
+            <div className={className} style={{maxWidth: "99vw", minHeight: "100vh"}}>
             <h1 style={{textAlign:"center"}}>SNAAAAAKE</h1>
             <h4 style={{textAlign:"center"}}><a href="https://github.com/CannonFodderr/reactsnake">Fork me on GitHub</a></h4>
             <button style={{width: "100%"}} className="nes-btn is-error" onClick={() => {this.context.setShowMenu()}}>

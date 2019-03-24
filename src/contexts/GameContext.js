@@ -94,10 +94,10 @@ export class GameContextStore extends React.Component{
     }
     setBoardSize = () => {
         if(window.innerHeight > window.innerWidth){
-            const boardSize = Math.round(window.innerWidth);
+            const boardSize = Math.round(window.innerWidth * 98 / 100);
             this.setState({boardSize});
         } else {
-            const boardSize = Math.round(window.innerHeight);
+            const boardSize = Math.round(window.innerHeight * 98 / 100);
             this.setState({boardSize});
         }
     }

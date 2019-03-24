@@ -13,8 +13,8 @@ class GameBoard extends React.Component{
         return(
             <div 
             ref={(divElement) => this.divElement = divElement}
-            className="nes-container is-dark is-rounded"
-            style={{width: this.context.boardSize, height: this.context.boardSize, margin: "0"}}
+            className="nes-container is-dark"
+            style={{width: this.context.boardSize, height: this.context.boardSize, margin: "0", border:"none"}}
             >
                 {/* <GameGrid /> */}
                 <ScoreBoard />

@@ -15,7 +15,7 @@ class Controls extends React.Component{
             return <div style={{display: "none"}}></div>
         }
         return(
-            <table className="nes-table is-bordered is-centered is-dark controls-table" style={{width: this.context.boardSize, display: "table"}}>
+            <table className="nes-table is-centered is-dark controls-table" style={{width: this.context.boardSize, display: "table"}}>
                 <tbody>
                     <tr>
                         <td></td>
