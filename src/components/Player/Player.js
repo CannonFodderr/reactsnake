@@ -1,6 +1,5 @@
 import React from 'react';
 import GameContext from '../../contexts/GameContext';
-import './Player.css';
 import { keyboardController } from '../../controllers/playerController';
 
 class Player extends React.Component{

@@ -9,8 +9,11 @@ import Pickup from '../Pickup/Pickup';
 import ScoreBoard from '../ScoreBoard/ScoreBoard';
 
 class GameBoard extends React.Component{
-    render(){
-        return(
+    renderGameBoard = () => {
+        if(this.context.showMenu){
+            return <div></div>
+        }
+        return (
             <div 
             ref={(divElement) => this.divElement = divElement}
             className="nes-container is-dark"
@@ -22,6 +25,12 @@ class GameBoard extends React.Component{
                 <Tail />
                 <Player />
             </div>
+        )
+    }
+
+    render(){
+        return(
+            <div>{this.renderGameBoard()}</div>
         )
     };
 };

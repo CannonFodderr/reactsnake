@@ -46,7 +46,7 @@ const scoreConditions = state => {
     return false;
 }
 const getRandomCoords = state => {
-    const i = Math.round(Math.random() * state.gridArr.length);
+    const i = Math.floor(Math.random() * state.gridArr.length - 1);
     return state.gridArr[i];
 }
 
@@ -80,16 +80,19 @@ export class GameContextStore extends React.Component{
         this.setState({gameBoardBorders});
         this.generateGrid();
     }
-    generateGrid = () => {
+    generateGrid = (gridBlockSize) => {
         const gridRowNumItems = Math.round(this.state.boardSize / this.state.gridBlockSize);
-        const gridArr = [];
-        for(let i = 0; i <= gridRowNumItems -1; i++){
-            for(let j = 0; j <= gridRowNumItems -1; j++){
-                let y = i * this.state.gridBlockSize;
-                let x = j * this.state.gridBlockSize;
-                gridArr.push({x, y, id: gridArr.length});
+        function generateGridCol(arr = [], index = 0){
+            if(index >= gridRowNumItems) return arr;
+            for(let i = 0; i <= gridRowNumItems -1; i++){
+                let x = i * gridBlockSize;
+                let y = index * gridBlockSize;
+                arr.push({x, y, id: arr.length});
             }
+            index++;
+            return generateGridCol(arr, index);
         }
+        let gridArr = generateGridCol();
         this.setState({gridArr, gridRowNumItems});
     }
     setBoardSize = () => {
@@ -237,7 +240,7 @@ export class GameContextStore extends React.Component{
             this.setBoardSize();
             const gridBlockSize = this.state.boardSize / 20;
             this.setState({gridBlockSize});
-            this.generateGrid();
+            this.generateGrid(gridBlockSize);
             this.setPickupPosition();
             this.setState({playerDirection: {x:0, y:0}});
             this.centerPlayerPosition();
