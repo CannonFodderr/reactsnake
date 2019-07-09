@@ -1,6 +1,6 @@
 import React, {createContext} from 'react';
-import leaderboards from '../api/leaderboards';
-import axios from 'axios';
+// import leaderboards from '../api/leaderboards';
+// import axios from 'axios';
 import { trigger, setSynthVolume } from '../audio/tone';
 const Context = createContext();
 
@@ -10,8 +10,9 @@ const config = {
 }
 
 const fetchLeaderboards = async () => {
-    const response = await leaderboards.get('/leaderboards');
-    return response.data;
+    // const response = await leaderboards.get('/leaderboards');
+    // return response.data;
+    return
 }
 
 const gameOverConditions = ({playerHeadPosition, boardSize, gridBlockSize, playerDirection, tailArr}) => {
@@ -227,10 +228,6 @@ export class GameContextStore extends React.Component{
     }
     reset = () => {
         this.stopAnimation();
-        if(this.state.score > 0){
-            const data = {name:this.state.playerName, score:this.state.score};
-            axios.post('https://afternoon-earth-75642.herokuapp.com/leaderboards', data);
-        }
         this.setState(INITIAL_STATE);
         this.setState({isMuted: config.isMuted});
         fetchLeaderboards().then((leaderBoards)=>{
